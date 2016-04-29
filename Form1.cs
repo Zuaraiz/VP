@@ -66,13 +66,13 @@ namespace VP_Project
                         int value = Convert.ToInt32(letter);
                         //Console.WriteLine("Letter = " + letter + " value =" + value);
                         img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, value));
-                        if (i == img.Width - 1 && j == img.Height - 1)
-                        {
-                            img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, textBoxMessage.TextLength));
-                        }
-
+                       
                     }
 
+                    if (i == img.Width - 1 && j == img.Height - 1)
+                    {
+                        img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, textBoxMessage.TextLength));
+                    }
                 }
              }
                 SaveFileDialog saveFile = new SaveFileDialog();
@@ -87,6 +87,11 @@ namespace VP_Project
                 }
                 
           
+        }
+
+        private void DecryptButton_Click(object sender, EventArgs e)
+        {
+            
         }
     };
 }

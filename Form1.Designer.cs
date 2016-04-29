@@ -74,6 +74,7 @@
             this.DecryptButton.TabIndex = 3;
             this.DecryptButton.Text = "Decrypt";
             this.DecryptButton.UseVisualStyleBackColor = true;
+            this.DecryptButton.Click += new System.EventHandler(this.DecryptButton_Click);
             // 
             // textBoxFilePath
             // 
