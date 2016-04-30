@@ -55,17 +55,20 @@ namespace VP_Project
             {
                 for (int j = 0; j < img.Height; j++)
                 {
-                    Color pixel = img.GetPixel(i,j);
+                    Color pixel = img.GetPixel(i, j);
 
                     if (i < 1 && j < textBoxMessage.TextLength)
                     {
-                        //Console.WriteLine("R = [" + i + "][" + j + "]=" + pixel.R);
-                        //Console.WriteLine("G = [" + i + "][" + j + "]=" + pixel.G);
-                        //Console.WriteLine("B = [" + i + "][" + j + "]=" + pixel.B);
+                        Console.WriteLine("R = [" + i + "][" + j + "]=" + pixel.R);
+                        Console.WriteLine("G = [" + i + "][" + j + "]=" + pixel.G);
+                        Console.WriteLine("B = [" + i + "][" + j + "]=" + pixel.B);
                         char letter = Convert.ToChar(textBoxMessage.Text.Substring(j,1));
                         int value = Convert.ToInt32(letter);
-                        //Console.WriteLine("Letter = " + letter + " value =" + value);
+                        Console.WriteLine("Letter = " + letter + " value =" + value);
                         img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, value));
+                        Console.WriteLine("Ra = [" + i + "][" + j + "]=" + pixel.R);
+                        Console.WriteLine("Ga = [" + i + "][" + j + "]=" + pixel.G);
+                        Console.WriteLine("Ba = [" + i + "][" + j + "]=" + pixel.B);
                        
                     }
 
@@ -91,6 +94,29 @@ namespace VP_Project
 
         private void DecryptButton_Click(object sender, EventArgs e)
         {
+            Bitmap img = new Bitmap(textBoxFilePath.Text);
+            string message = "";
+            Color lastPixel = img.GetPixel(img.Width-1 , img.Height-1);
+            int msglength = lastPixel.B;
+            for (int i = 0; i < img.Width; i++)
+            {
+                for (int j = 0; j < img.Height; j++)
+                {
+                    Color pixel = img.GetPixel(i, j);
+
+                    if (i < 1 && j < msglength)
+                    {
+
+                        int value = pixel.B;
+                        char c = Convert.ToChar(value);
+                        string letter = System.Text.Encoding.ASCII.GetString(new byte[] {Convert.ToByte(c)});
+                        message = message + letter;
+                    }
+
+                }
+            }
+
+            textBoxMessage.Text = message;
             
         }
     };
