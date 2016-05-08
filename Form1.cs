@@ -1,19 +1,25 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using Steganography;
 
 namespace VP_Project
 {
     public partial class Form1 : Form
     {
+        string loadedimagepath;
+        string  password = "pass";
         public Form1()
         {
             InitializeComponent();
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -28,8 +34,9 @@ namespace VP_Project
 
         private void OpenButton_Click(object sender, EventArgs e)
         {
+            //open file dialogue
             OpenFileDialog openDialog = new OpenFileDialog();
-            openDialog.Filter = "Image Files (*.png , *.jpg) | *png ; *jpg";
+            openDialog.Filter = "Image Files (*.bmp) | *bmp";
             openDialog.InitialDirectory = @"C:\Users\Zuraizz\Desktop";
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
@@ -37,88 +44,83 @@ namespace VP_Project
                 {
                     textBoxFilePath.Text = openDialog.FileName.ToString();
                     pictureBox.ImageLocation = textBoxFilePath.Text;
+                    loadedimagepath = textBoxFilePath.Text;
+                    
                 }
                 catch(Exception ex)
                 {
                     MessageBox.Show("Error: coud not read from disk \n" + ex.Message);
                 }
             }
+            Image picture = new Bitmap(loadedimagepath);
+
+            pictureBox.Image = new Bitmap(picture);
+            
 
 
         }
 
         private void EncryptButton_Click(object sender, EventArgs e)
         {
-            Bitmap img = new Bitmap(textBoxFilePath.Text);
             
+            string stegofile = textBoxFilePath.Text;
+            string message = textBoxMessage.Text;
+            string newmessage = "";
 
-            for (int i = 0; i < img.Width; i++)
+            try
             {
-                for (int j = 0; j < img.Height; j++)
-                {
-                    Color pixel = img.GetPixel(i, j);
 
-                    if (i < 1 && j < textBoxMessage.TextLength)
-                    {
-                        Console.WriteLine("R = [" + i + "][" + j + "]=" + pixel.R);
-                        Console.WriteLine("G = [" + i + "][" + j + "]=" + pixel.G);
-                        Console.WriteLine("B = [" + i + "][" + j + "]=" + pixel.B);
-                        char letter = Convert.ToChar(textBoxMessage.Text.Substring(j,1));
-                        int value = Convert.ToInt32(letter);
-                        Console.WriteLine("Letter = " + letter + " value =" + value);
-                        img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, value));
-                        Console.WriteLine("Ra = [" + i + "][" + j + "]=" + pixel.R);
-                        Console.WriteLine("Ga = [" + i + "][" + j + "]=" + pixel.G);
-                        Console.WriteLine("Ba = [" + i + "][" + j + "]=" + pixel.B);
-                       
-                    }
+                    //Encryption Class Functionality
+                    //This gets a bmp image path and password from user and checks if the image is already encrypted or not?
 
-                    if (i == img.Width - 1 && j == img.Height - 1)
-                    {
-                        img.SetPixel(i, j, Color.FromArgb(pixel.R, pixel.G, textBoxMessage.TextLength));
-                    }
-                }
-             }
-                SaveFileDialog saveFile = new SaveFileDialog();
-                saveFile.Filter = "Image Files (*.png , *.jpg) | *png ; *jpg";
-                saveFile.InitialDirectory = @"C:\Users\Zuraizz\Desktop";
-                if (saveFile.ShowDialog() == DialogResult.OK)
-                {
-                    textBoxFilePath.Text = saveFile.FileName.ToString();
-                    pictureBox.ImageLocation = textBoxFilePath.Text;
+                    IStegoFile stegoEN = new BMPStegoFile(loadedimagepath, password);
+                    string encodedmessage = stegoEN.HiddenMessage;
 
-                    img.Save(textBoxFilePath.Text);
-                }
+                    //If yes it concatenates the previous message and new message to be encrypted
+
+                    newmessage = encodedmessage + " " + message;
+
+                    //Encryption
+                    //This gets the new concatenated message and encrypts it into a stego file.
+
+                    ICoverFile cover1 = new BMPCoverFile(loadedimagepath);
+                    cover1.CreateStegoFile(stegofile, newmessage, password);
+
+                    MessageBox.Show("Message hidden successfully");
                 
-          
+
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
         }
 
         private void DecryptButton_Click(object sender, EventArgs e)
         {
-            Bitmap img = new Bitmap(textBoxFilePath.Text);
-            string message = "";
-            Color lastPixel = img.GetPixel(img.Width-1 , img.Height-1);
-            int msglength = lastPixel.B;
-            for (int i = 0; i < img.Width; i++)
+            try
             {
-                for (int j = 0; j < img.Height; j++)
+                if (loadedimagepath == "")
                 {
-                    Color pixel = img.GetPixel(i, j);
-
-                    if (i < 1 && j < msglength)
-                    {
-
-                        int value = pixel.B;
-                        char c = Convert.ToChar(value);
-                        string letter = System.Text.Encoding.ASCII.GetString(new byte[] {Convert.ToByte(c)});
-                        message = message + letter;
-                    }
-
+                    MessageBox.Show("Select the stego file to decode");
+                    return;
                 }
-            }
 
-            textBoxMessage.Text = message;
-            
+                //Decryption Class Functionality
+                //This gets a stego image file and password than decrypts the file to extract the hidden message
+
+                IStegoFile stego = new BMPStegoFile(loadedimagepath, password);
+
+                //This displays the encrypted message in the selected field
+
+                textBoxMessage.Text = stego.HiddenMessage;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     };
 }
