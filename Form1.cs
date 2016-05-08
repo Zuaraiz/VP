@@ -50,6 +50,7 @@ namespace VP_Project
         private void EncryptButton_Click(object sender, EventArgs e)
         {
             Bitmap img = new Bitmap(textBoxFilePath.Text);
+            
 
             for (int i = 0; i < img.Width; i++)
             {
