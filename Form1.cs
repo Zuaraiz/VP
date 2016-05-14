@@ -87,6 +87,16 @@ namespace VP_Project
                     cover1.CreateStegoFile(stegofile, newmessage, password);
 
                     MessageBox.Show("Message hidden successfully");
+                    SaveFileDialog saveFile = new SaveFileDialog();
+                    saveFile.Filter = "Image Files (*.bmp) | *bmp";
+                    saveFile.InitialDirectory = @"C:\Users\Zuraizz\Desktop";
+                    if (saveFile.ShowDialog() == DialogResult.OK)
+                    {
+                        textBoxFilePath.Text = saveFile.FileName.ToString();
+                        pictureBox.ImageLocation = textBoxFilePath.Text;
+
+                        picture.Save(textBoxFilePath.Text);
+                    }
                 
 
             }
