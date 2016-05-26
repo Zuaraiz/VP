@@ -15,11 +15,11 @@ namespace VP_Project
     public partial class Form1 : Form
     {
         string loadedimagepath;
-        string  password = "pass";
+        string password = "pass";
         public Form1()
         {
             InitializeComponent();
-            
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -45,9 +45,9 @@ namespace VP_Project
                     textBoxFilePath.Text = openDialog.FileName.ToString();
                     pictureBox.ImageLocation = textBoxFilePath.Text;
                     loadedimagepath = textBoxFilePath.Text;
-                    
+
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("Error: coud not read from disk \n" + ex.Message);
                 }
@@ -55,14 +55,14 @@ namespace VP_Project
             Image picture = new Bitmap(loadedimagepath);
 
             pictureBox.Image = new Bitmap(picture);
-            
+
 
 
         }
 
         private void EncryptButton_Click(object sender, EventArgs e)
         {
-            
+
             string stegofile = textBoxFilePath.Text;
             string message = textBoxMessage.Text;
             string newmessage = "";
@@ -70,34 +70,34 @@ namespace VP_Project
             try
             {
 
-                    //Encryption Class Functionality
-                    //This gets a bmp image path and password from user and checks if the image is already encrypted or not?
+                //Encryption Class Functionality
+                //This gets a bmp image path and password from user and checks if the image is already encrypted or not?
 
-                    IStegoFile stegoEN = new BMPStegoFile(loadedimagepath, password);
-                    string encodedmessage = stegoEN.HiddenMessage;
+                IStegoFile stegoEN = new BMPStegoFile(loadedimagepath, password);
+                string encodedmessage = stegoEN.HiddenMessage;
 
-                    //If yes it concatenates the previous message and new message to be encrypted
+                //If yes it concatenates the previous message and new message to be encrypted
 
-                    newmessage = encodedmessage + " " + message;
+                newmessage = encodedmessage + " " + message;
 
-                    //Encryption
-                    //This gets the new concatenated message and encrypts it into a stego file.
+                //Encryption
+                //This gets the new concatenated message and encrypts it into a stego file.
 
-                    ICoverFile cover1 = new BMPCoverFile(loadedimagepath);
-                    cover1.CreateStegoFile(stegofile, newmessage, password);
+                ICoverFile cover1 = new BMPCoverFile(loadedimagepath);
+                cover1.CreateStegoFile(stegofile, newmessage, password);
 
-                    MessageBox.Show("Message hidden successfully");
-                    SaveFileDialog saveFile = new SaveFileDialog();
-                    saveFile.Filter = "Image Files (*.bmp) | *bmp";
-                    saveFile.InitialDirectory = @"C:\Users\Zuraizz\Desktop";
-                    if (saveFile.ShowDialog() == DialogResult.OK)
-                    {
-                        textBoxFilePath.Text = saveFile.FileName.ToString();
-                        pictureBox.ImageLocation = textBoxFilePath.Text;
+                MessageBox.Show("Message hidden successfully");
+                SaveFileDialog saveFile = new SaveFileDialog();
+                saveFile.Filter = "Image Files (*.bmp) | *bmp";
+                saveFile.InitialDirectory = @"C:\Users\Zuraizz\Desktop";
+                if (saveFile.ShowDialog() == DialogResult.OK)
+                {
+                    textBoxFilePath.Text = saveFile.FileName.ToString();
+                    pictureBox.ImageLocation = textBoxFilePath.Text;
 
-                        picture.Save(textBoxFilePath.Text);
-                    }
-                
+                 //   picture.Save(textBoxFilePath.Text);
+                }
+
 
             }
 
@@ -126,6 +126,31 @@ namespace VP_Project
                 //This displays the encrypted message in the selected field
 
                 textBoxMessage.Text = stego.HiddenMessage;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenFileDialog ofd = new OpenFileDialog();
+
+                ofd.Filter = "Windows Bitmap (*.bmp)|*.bmp";
+                ofd.CheckFileExists = false;
+
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    textBox1.Text = ofd.FileName;
+                }
             }
             catch (Exception ex)
             {
