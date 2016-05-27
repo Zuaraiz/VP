@@ -1,9 +1,0 @@
-C:\Users\Zuraizz\documents\visual studio 2010\Projects\VP Project\bin\Debug\VP Project.exe
-C:\Users\Zuraizz\documents\visual studio 2010\Projects\VP Project\bin\Debug\VP Project.pdb
-C:\Users\Zuraizz\documents\visual studio 2010\Projects\VP Project\bin\Debug\stego.dll
-C:\Users\Zuraizz\documents\visual studio 2010\Projects\VP Project\obj\x86\Debug\VP_Project.Form1.resources
-C:\Users\Zuraizz\documents\visual studio 2010\Projects\VP Project\obj\x86\Debug\VP_Project.Properties.Resources.resources
-C:\Users\Zuraizz\documents\visual studio 2010\Projects\VP Project\obj\x86\Debug\VP Project.csproj.GenerateResource.Cache
-C:\Users\Zuraizz\documents\visual studio 2010\Projects\VP Project\obj\x86\Debug\VP Project.exe
-C:\Users\Zuraizz\documents\visual studio 2010\Projects\VP Project\obj\x86\Debug\VP Project.pdb
-C:\Users\Zuraizz\Documents\Visual Studio 2010\Projects\VP Project\obj\x86\Debug\VP Project.csprojResolveAssemblyReference.cache
