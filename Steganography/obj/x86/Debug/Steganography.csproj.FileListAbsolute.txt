@@ -1,0 +1,9 @@
+C:\Users\Zuraizz\Documents\visual studio 2010\Projects\Steganography\bin\Debug\Steganography.exe
+C:\Users\Zuraizz\Documents\visual studio 2010\Projects\Steganography\bin\Debug\Steganography.pdb
+C:\Users\Zuraizz\Documents\visual studio 2010\Projects\Steganography\bin\Debug\stego.dll
+C:\Users\Zuraizz\Documents\visual studio 2010\Projects\Steganography\obj\x86\Debug\Steganography.Form1.resources
+C:\Users\Zuraizz\Documents\visual studio 2010\Projects\Steganography\obj\x86\Debug\Steganography.Properties.Resources.resources
+C:\Users\Zuraizz\Documents\visual studio 2010\Projects\Steganography\obj\x86\Debug\Steganography.csproj.GenerateResource.Cache
+C:\Users\Zuraizz\Documents\visual studio 2010\Projects\Steganography\obj\x86\Debug\Steganography.exe
+C:\Users\Zuraizz\Documents\visual studio 2010\Projects\Steganography\obj\x86\Debug\Steganography.pdb
+C:\Users\Zuraizz\documents\visual studio 2010\Projects\Steganography\obj\x86\Debug\Steganography.csprojResolveAssemblyReference.cache
